@@ -3,13 +3,29 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px 60px;
-  box-shadow: 0 1px 3px -2px #000;
-  margin-bottom: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   background: white;
 }
 
 .nav-logo {
   width: 200px;
+}
+
+.navbar-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.back-to-store-btn {
+  padding: 10px 10px;
+  margin-right: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #6757be; /* Blue color, change as needed */
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
 }
 
 .nav-profile {
@@ -22,6 +38,11 @@
   }
   .nav-logo {
     width: 150px;
+  }
+  .back-to-store-btn {
+    padding: 8px 10px;
+    font-size: 10px;
+    margin-right: 10px;
   }
   .nav-profile {
     width: 60px;
