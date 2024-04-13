@@ -1,17 +1,18 @@
 import React, { useContext, useState } from "react";
-import "./Navbar.css";
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 import logo from "../Assets/logo.png";
 import cart_icon from "../Assets/cart_icon.png";
-import { ShopContext } from "../../Context/ShopContext";
 import nav_dropdown from "../Assets/drop-down.png";
+import { ShopContext } from "../../Context/ShopContext";
 import { useRef } from "react";
+
 const Navbar = () => {
   const [menu, setMenu] = useState("shop");
   const { getTotalCartItems } = useContext(ShopContext);
   const menuRef = useRef();
 
-  const dropdown_toggle = (e) => {
+  const dropdownToggle = (e) => {
     menuRef.current.classList.toggle("nav-menu-visible");
     e.target.classList.toggle("open");
   };
@@ -26,50 +27,34 @@ const Navbar = () => {
       </Link>
       <img
         className="nav-dropdown"
-        onClick={dropdown_toggle}
+        onClick={dropdownToggle}
         src={nav_dropdown}
         alt=""
       />
       <ul ref={menuRef} className="nav-menu">
-        <li
-          onClick={() => {
-            setMenu("shop");
-          }}
-        >
-          <Link style={{ textDecoration: "none" }} to="/">
+        <li onClick={() => setMenu("shop")}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             Shop
           </Link>
-          {menu === "shop" ? <hr /> : <></>}
+          {menu === "shop" ? <hr /> : null}
         </li>
-        <li
-          onClick={() => {
-            setMenu("mens");
-          }}
-        >
-          <Link style={{ textDecoration: "none" }} to="/mens">
+        <li onClick={() => setMenu("mens")}>
+          <Link to="/mens" style={{ textDecoration: "none" }}>
             Men
           </Link>
-          {menu === "mens" ? <hr /> : <></>}
+          {menu === "mens" ? <hr /> : null}
         </li>
-        <li
-          onClick={() => {
-            setMenu("womens");
-          }}
-        >
-          <Link style={{ textDecoration: "none" }} to="/womens">
+        <li onClick={() => setMenu("womens")}>
+          <Link to="/womens" style={{ textDecoration: "none" }}>
             Women
           </Link>
-          {menu === "womens" ? <hr /> : <></>}
+          {menu === "womens" ? <hr /> : null}
         </li>
-        <li
-          onClick={() => {
-            setMenu("kids");
-          }}
-        >
-          <Link style={{ textDecoration: "none" }} to="/kids">
+        <li onClick={() => setMenu("kids")}>
+          <Link to="/kids" style={{ textDecoration: "none" }}>
             Kids
           </Link>
-          {menu === "kids" ? <hr /> : <></>}
+          {menu === "kids" ? <hr /> : null}
         </li>
       </ul>
       <div className="nav-login-cart">
@@ -83,9 +68,14 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
+          <>
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+            <Link to="YOUR_ADMIN_LIVE_HOSTED_LINK_HERE">
+              <button>Admin</button>
+            </Link>
+          </>
         )}
         <Link to="/cart">
           <img src={cart_icon} alt="" />

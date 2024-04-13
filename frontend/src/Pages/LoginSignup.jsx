@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
-
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  // console.log(serverUrl);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,7 +16,7 @@ const LoginSignup = () => {
   const login = async () => {
     console.log("Login function Executed", formData);
     let responseData;
-    await fetch("http://localhost:4000/login", {
+    await fetch(`${serverUrl}/login`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -36,7 +37,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log("Signup function Executed", formData);
     let responseData;
-    await fetch("http://localhost:4000/signup", {
+    await fetch(`${serverUrl}/signup`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",

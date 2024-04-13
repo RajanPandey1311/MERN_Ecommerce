@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./NewCollections.css";
 import Item from "../Item/Item";
 const NewCollections = () => {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [new_collection, setNew_collection] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4000/newcollections")
+    fetch(`${serverUrl}/newcollections`)
       .then((response) => response.json())
       .then((data) => setNew_collection(data));
   }, []);
