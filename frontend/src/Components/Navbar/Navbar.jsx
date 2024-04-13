@@ -72,7 +72,7 @@ const Navbar = () => {
             <Link to="/login">
               <button>Login</button>
             </Link>
-            <Link to="YOUR_ADMIN_LIVE_HOSTED_LINK_HERE">
+            <Link to="https://admin-rajan.vercel.app/">
               <button>Admin</button>
             </Link>
           </>
