@@ -12,13 +12,11 @@ const ShopContextProvider = (props) => {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [all_product, setAll_Product] = useState([]);
   const [cartItems, setCartItems] = useState(getDefaultCart());
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${serverUrl}/allproducts`)
       .then((response) => response.json())
       .then((data) => setAll_Product(data));
-    setLoading(false);
 
     if (localStorage.getItem("auth-token")) {
       fetch(`${serverUrl}/getcart`, {
@@ -102,41 +100,9 @@ const ShopContextProvider = (props) => {
     cartItems,
     addToCart,
     removeFromCart,
-    loading,
   };
   return (
     <ShopContext.Provider value={contextValue}>
-    {loading && (
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 9999,
-          color: "#fff",
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            border: "8px solid #f3f3f3",
-            borderRadius: "50%",
-            borderTop: "8px solid #3498db",
-            width: "60px",
-            height: "60px",
-            animation: "spin 2s linear infinite",
-            marginBottom: "20px",
-          }}
-        ></div>
-        <div>Sorry for the inconvenience, Loading...</div>
-      </div>
-    )}
     {props.children}
   </ShopContext.Provider>
   );
