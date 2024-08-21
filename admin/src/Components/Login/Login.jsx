@@ -9,7 +9,7 @@ const Login = ({ onLogin }) => {
   const handleLogin = (event) => {
     event.preventDefault();
     const UserName = "rajan@123";
-    const UserPassword = "123";
+    const UserPassword = 9838";
     if (username === UserName && password === UserPassword) {
       onLogin();
     } else {
@@ -35,6 +35,7 @@ const Login = ({ onLogin }) => {
           <input
             type="password"
             value={password}
+            placeholder="Contact to the Owner"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -44,7 +45,7 @@ const Login = ({ onLogin }) => {
       </form>
       <span>Username: rajan@123</span>
       <hr />
-      <span>Password: 123</span>
+      <span>Password: </span>
     </div>
   );
 };
