@@ -7,9 +7,11 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const { error } = require("console");
+const Razorpay = require('razorpay');
+const dotenv = require('dotenv')
 
 app.use(express.json());
-app.use(cors());
+dotenv.config();
 
 //MongoDB
 mongoose.connect(
@@ -34,6 +36,12 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// Initialize Razorpay instance
+const razorpay = new Razorpay({
+  key_id: process.env.RAZOR_PAY_ID, 
+  key_secret: process.env.RAZOR_PAY_SECRET 
+});
 
 //Creating upload end point
 app.use("/images", express.static("upload/images"));
@@ -272,6 +280,25 @@ app.post("/getcart", fetchUser, async (req, res) => {
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
+
+
+app.post('/create-order', async (req, res) => {
+  const { amount } = req.body;
+
+  try {
+    const options = {
+      amount: amount * 100,
+      currency: 'INR',
+      receipt: `order_rcptid_${Math.floor(Math.random() * 1000000)}`
+    };
+
+    const order = await razorpay.orders.create(options);
+    res.json(order);
+  } catch (error) {
+    res.status(500).send('Error creating order');
+  }
+});
+
 
 app.listen(port, (error) => {
   if (!error) {
