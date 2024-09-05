@@ -4,9 +4,13 @@ import { ShopContext } from '../../Context/ShopContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import remove_icon from '../Assets/cart_cross_icon.png';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
 const CartItems = () => {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
     const {getTotalCartAmount,all_product,cartItems, removeFromCart}=useContext(ShopContext);
-    //
+    const navigate = useNavigate();
     const handleRemove = (productId) => {
       removeFromCart(productId);
       toast.success('Item removed successfully!', {
@@ -18,7 +22,46 @@ const CartItems = () => {
         draggable: true,
       });
     };
-    //
+    
+    const handlePayment = async () => {
+      const amount = getTotalCartAmount();
+  
+      try {
+        const { data: order } = await axios.post(`${serverUrl}/create-order`, { amount });
+  
+        // Razorpay options
+        const options = {
+          key: process.env.RAZOR_PAY_ID,
+          amount: order.amount,
+          currency: order.currency,
+          name: 'Rajan Ecommerce',
+          description: 'Test Transaction',
+          image: '/your_logo.png',
+          order_id: order.id,
+          handler: function (response) {
+            toast.success('Payment successful!');
+            console.log(response);
+            setTimeout(() => {
+              navigate("/");
+          }, 5000);
+          },
+          prefill: {
+            name: 'Rajan Pandey',
+            email: 'rajan@example.com',
+            contact: '6392182390'
+          },
+          theme: {
+            color: '#3399cc'
+          }
+        };
+  
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      } catch (error) {
+        console.error('Error during payment:', error);
+        toast.error('Payment failed!');
+      }
+    };
   return (
     <div className='cartitems'>
       <div className='cartitems-format-main'>
@@ -69,9 +112,8 @@ const CartItems = () => {
                     <h3>${getTotalCartAmount()}</h3>
                 </div>
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+            <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
         </div>
-        {/* promocode section */}
         <div className='cartitems-promocode'>
             <p>If you have a promocode, Enter it here </p>
             <div className='cartitems-promobox'>
