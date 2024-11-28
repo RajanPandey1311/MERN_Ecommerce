@@ -1,6 +1,6 @@
 import React from "react";
 import "./Navbar.css";
-import navlogo from "../../assets/nav-logo.svg";
+import navlogo from "../../assets/logo.png";
 import navProfile from "../../assets/nav-profile.svg";
 
 const Navbar = () => {
@@ -10,7 +10,10 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <img src={navlogo} className="nav-logo" alt="Logo" />
+              <div className="nav-logo">
+          <img src={navlogo} alt="logo" />
+          <p className="company-name">WANDERWISH</p>
+        </div>
       <div className="navbar-buttons">
         <button className="back-to-store-btn" onClick={handleBackToStore}>
           Back to Store
