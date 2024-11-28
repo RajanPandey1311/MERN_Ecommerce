@@ -24,7 +24,7 @@ const Hero = () => {
         </Link>
       </div>
       <div className="hero-right">
-        <img src={hero_image} alt="" />
+        <img src={hero_image} alt="" style={{height:'100%'}} />
       </div>
     </div>
   );
