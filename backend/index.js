@@ -24,6 +24,13 @@ app.get("/", (req, res) => {
   res.send("Express is running");
 });
 
+
+// Cron job to make the website awaken
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
+
 // Storing Images
 
 const storage = multer.diskStorage({
